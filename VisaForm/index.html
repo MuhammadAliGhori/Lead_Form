@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+      crossorigin="anonymous"
+    />
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
+      integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
+      integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF"
+      crossorigin="anonymous"
+    ></script>
+    <title>Leads</title>
+    <style>
+      .custom-btn {
+        max-width: fit-content;
+        height: auto;
+        font-size: 13px;
+        color: #fff;
+        border-radius: 5px;
+        padding: 5px 10px;
+        font-family: "Lato", sans-serif;
+        font-weight: 500;
+        background: #1fd1f9;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        position: relative;
+        display: inline-block;
+        box-shadow: inset 2px 2px 2px 0px rgba(255, 255, 255, 0.5),
+          7px 7px 20px 0px rgba(0, 0, 0, 0.1),
+          4px 4px 5px 0px rgba(0, 0, 0, 0.1);
+        outline: none;
+      }
+      .login2 {
+        display: none;
+      }
+      .truncate-10-words {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        /* display: inline-block; */
+        max-width: 170px;
+        /* width: 100%;  */
+      }
+
+      .btn-9 {
+        border: none;
+        transition: all 0.3s ease;
+        overflow: hidden;
+      }
+      .btn-9:after {
+        position: absolute;
+        content: " ";
+        z-index: -1;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: #1fd1f9 !important;
+        background-image: linear-gradient(
+          315deg,
+          #1fd1f9 0%,
+          #b621fe 74%
+        ) !important;
+        transition: all 0.3s ease;
+      }
+      .btn-9:hover {
+        background: #b621fe;
+        box-shadow: 4px 4px 6px 0 rgba(255, 255, 255, 0.5),
+          -4px -4px 6px 0 rgba(116, 125, 136, 0.2),
+          inset -4px -4px 6px 0 rgba(255, 255, 255, 0.5),
+          inset 4px 4px 6px 0 rgba(116, 125, 136, 0.3);
+        color: #fff;
+      }
+      .btn-9:hover:after {
+        -webkit-transform: scale(2) rotate(180deg);
+        transform: scale(2) rotate(180deg);
+        box-shadow: 4px 4px 6px 0 rgba(255, 255, 255, 0.5),
+          -4px -4px 6px 0 rgba(116, 125, 136, 0.2),
+          inset -4px -4px 6px 0 rgba(255, 255, 255, 0.5),
+          inset 4px 4px 6px 0 rgba(116, 125, 136, 0.3);
+      }
+      .mmbox {
+        background-color: #eef4f9;
+        height: 90vh;
+      }
+      /* cards */
+      .item-card {
+        transition: 0.5s;
+        color: black !important;
+        cursor: pointer;
+        text-align: start;
+        background-color: #fff;
+        position: relative;
+        top: 5rem;
+        /* background: linear-gradient(
+      45deg,
+      rgba(9, 175, 232, 1) 0%,
+      rgba(41, 244, 153, 1) 100%
+    ); */
+        box-shadow: 0 5px 20px rgba(41, 244, 153, 0.3);
+      }
+
+      .item-card-title {
+        font-size: 15px;
+        transition: 1s;
+        cursor: pointer;
+      }
+      .item-card-title i {
+        font-size: 15px;
+        transition: 1s;
+        cursor: pointer;
+        color: #ffa710;
+      }
+      .card-title i:hover {
+        transform: scale(1.25) rotate(100deg);
+        color: #18d4ca;
+      }
+      .card:hover {
+        transform: scale(1.05);
+        box-shadow: 10px 10px 15px rgba(0, 0, 0, 0.3);
+      }
+      .modal-content {
+        overflow-x: scroll;
+        width: -webkit-fill-available;
+      }
+      .card::before,
+      .card::after {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        transform: scale3d(0, 0, 1);
+        transition: transform 0.3s ease-out 0s;
+        background: rgba(255, 255, 255, 0.1);
+        content: "";
+        pointer-events: none;
+      }
+      .card::before {
+        transform-origin: left top;
+      }
+      .card::after {
+        transform-origin: right bottom;
+      }
+      .card:hover::before,
+      .card:hover::after,
+      .card:focus::before,
+      .card:focus::after {
+        transform: scale3d(1, 1, 1);
+      }
+      /* modal css */
+      .modal {
+        display: none; /* Hidden by default */
+        position: fixed; /* Stay in place */
+        z-index: 1; /* Sit on top */
+        padding-top: 100px; /* Location of the box */
+        left: 0;
+        top: 0;
+        width: 100%; /* Full width */
+        height: 100%; /* Full height */
+        overflow: auto; /* Enable scroll if needed */
+        background-color: rgb(0, 0, 0); /* Fallback color */
+        background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+      }
+
+      /* Modal Content */
+      .modal-content {
+        background-color: #fefefe;
+        margin: auto;
+        padding: 20px;
+        border: 1px solid #888;
+        width: 80%;
+      }
+
+      /* The Close Button */
+      .close {
+        color: #aaaaaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+      }
+
+      .close:hover,
+      .close:focus {
+        color: #000;
+        text-decoration: none;
+        cursor: pointer;
+      }
+      @media only screen and (max-width: 991px) {
+        .login2 {
+          display: block;
+        }
+        .login1 {
+          display: none;
+        }
+      }
+
+      @media screen and (max-width: 800px) {
+        .table-responsive {
+          overflow: scroll;
+          width: -webkit-fill-available;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="myModal" class="modal">
+      <!-- Modal content -->
+      <div class="modal-content">
+        <span class="close">&times;</span>
+        <h3 class="text-center">Thanks for submitting Your Lead.</h3>
+      </div>
+    </div>
+    <div class="px-5 pb-5">
+      <div
+        class="d-flex flex-column justify-content-center align-items-center py-5"
+      >
+        <h1 class="text-center fw-bolder">Create Your Lead</h1>
+        <form class="w-lg-50 w-75" id="bookingForm">
+          <div class="form-group text-start mt-3">
+            <label for="name">Name</label>
+            <input
+              type="text"
+              class="form-control"
+              id="name"
+              placeholder="Enter User Name"
+            />
+            <small id="nameHelp" class="form-text text-muted">
+              We'll never share your Name with anyone else.
+            </small>
+          </div>
+          <div class="form-group text-start mt-3">
+            <label for="fromCountry">From Country</label>
+            <input
+              type="text"
+              class="form-control"
+              id="fromCountry"
+              placeholder="From Country"
+            />
+          </div>
+          <div class="form-group text-start mt-3">
+            <label for="toCountry">To Country</label>
+            <input
+              type="text"
+              class="form-control"
+              id="toCountry"
+              placeholder="To Country"
+            />
+          </div>
+          <div class="form-group text-start mt-3">
+            <label for="description">Description</label>
+            <input
+              type="text"
+              class="form-control"
+              id="description"
+              placeholder="Enter User Description"
+            />
+            <small id="descriptionHelp" class="form-text text-muted">
+              We'll never share your description with anyone else.
+            </small>
+          </div>
+          <div class="form-group text-start mt-3">
+            <label for="fromDate">From Date</label>
+            <input type="date" class="form-control" id="fromDate" />
+          </div>
+          <div class="form-group text-start mt-3">
+            <label for="toDate">To Date</label>
+            <input type="date" class="form-control" id="toDate" />
+          </div>
+          <div class="form-group text-start mt-3">
+            <label for="category">Category</label>
+            <select class="form-control" id="category">
+              <option value="">Select Category</option>
+              <option value="education">Education</option>
+              <option value="engineering">Engineering</option>
+              <option value="medical">Medical</option>
+            </select>
+          </div>
+          <button
+            type="button"
+            class="custom-btn btn-9 mt-3 w-100"
+            onclick="handleSubmit()"
+          >
+            Submit
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
+      integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
+      integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF"
+      crossorigin="anonymous"
+    ></script>
+    <script>
+      // Function to handle form submission
+      function handleSubmit() {
+        const formData = {
+          name: document.getElementById("name").value,
+          fromCountry: document.getElementById("fromCountry").value,
+          toCountry: document.getElementById("toCountry").value,
+          description: document.getElementById("description").value,
+          fromDate: document.getElementById("fromDate").value,
+          toDate: document.getElementById("toDate").value,
+          category: document.getElementById("category").value,
+        };
+        // Perform the API request using vanilla JavaScript
+        axios
+          .post("https://visa.lkidemos.com/api/createbooking", formData)
+          .then((response) => {
+            if (response.status === 201) {
+              // window.location.href = "/done.html";
+              var modal = document.getElementById("myModal");
+              modal.style.display = "block";
+            }
+          })
+          .catch((error) => {
+            console.error("Error creating booking:", error);
+          });
+      }
+
+      document.addEventListener("DOMContentLoaded", function () {});
+    </script>
+    <script>
+      var modal = document.getElementById("myModal");
+      var btn = document.getElementById("myBtn");
+      var span = document.getElementsByClassName("close")[0];
+      btn.onclick = function () {
+        modal.style.display = "block";
+      };
+      span.onclick = function () {
+        modal.style.display = "none";
+      };
+      window.onclick = function (event) {
+        if (event.target == modal) {
+          modal.style.display = "none";
+        }
+      };
+    </script>
+  </body>
+</html>
